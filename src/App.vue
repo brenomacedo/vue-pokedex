@@ -1,7 +1,15 @@
 <template>
   <div id="app">
     <div class="column is-half is-offset-one-quarter">
-      <div v-for="(pokemon, index) in pokemons" :key="index">
+      <img src="./assets/breno.png" alt="">
+      <h1 class="is-size-6">POKEDEX</h1>
+      <input type="text" v-model="search" class="input is-rounded"
+      placeholder="search a pokemon by the name">
+      <br>
+      <br>
+      <button class="button is-fullwidth is-success">Search</button>
+      <br>
+      <div v-for="(pokemon, index) in searchPokemons" :key="pokemon.name">
         <Pokemon :name="pokemon.name" :url="pokemon.url" :num="index + 1" />
       </div>
     </div>
@@ -16,7 +24,8 @@ export default {
   name: 'App',
   data() {
     return {
-      pokemons: []
+      pokemons: [],
+      search: ''
     }
   },
   created: async function() {
@@ -25,6 +34,16 @@ export default {
   },
   components: {
     Pokemon
+  },
+  computed: {
+    searchPokemons: function() {
+      if(!this.search.trim()) {
+        return this.pokemons
+      } else {
+        const regex = new RegExp(this.search)
+        return this.pokemons.filter(pokemon => pokemon.name.match(regex))
+      }
+    }
   }
 }
 </script>
