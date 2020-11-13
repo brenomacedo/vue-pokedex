@@ -1,7 +1,25 @@
 <template>
-    <div>
-        <h1>{{ num }}-{{ name }}</h1>
-        <p>{{ url }}</p>
+    <div id="pokemon">
+        <div class="card">
+            <div class="card-image">
+                <figure>
+                    <img :src="isFront ? pokemon.front : pokemon.back" @click="changePic"
+                    alt="Placeholder image">
+                </figure>
+            </div>
+            <div class="card-content">
+                <div class="media">
+                <div class="media-content">
+                    <p class="title is-4 pokename">{{ num }} - {{ name }}</p>
+                    <p class="subtitle is-6">{{ pokemon.type }}</p>
+                </div>
+                </div>
+
+                <div class="content">
+                
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -23,14 +41,32 @@ export default {
     },
     data() {
         return {
-            pokemon: {}
+            pokemon: {
+                type: '',
+                front: '',
+                back: ''
+            },
+            isFront: true
+        }
+    },
+    methods: {
+        changePic: function () {
+            this.isFront = !this.isFront
         }
     }
 }
 </script>
 
 <style scoped>
-    h1 {
+    .pokename {
         text-transform: capitalize;
+    }
+
+    #pokemon {
+        margin-top: 6px;
+    }
+
+    img {
+        cursor: pointer;
     }
 </style>
