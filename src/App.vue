@@ -1,17 +1,33 @@
 <template>
   <div id="app">
-
+    <div v-for="(pokemon, index) in pokemons" :key="index">
+      <Pokemon :name="pokemon.name" :url="pokemon.url" :num="index + 1" />
+    </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+import Pokemon from './components/Pokemon'
 
 export default {
-  name: 'App'
+  name: 'App',
+  data() {
+    return {
+      pokemons: []
+    }
+  },
+  created: async function() {
+    const pokemons = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=151&offset=0')
+    this.pokemons = pokemons.data.results
+  },
+  components: {
+    Pokemon
+  }
 }
 </script>
 
-<style>
+<style scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
